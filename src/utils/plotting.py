@@ -76,8 +76,8 @@ def _make_evaluation_figure(data, b_id, alpha='dynamic'):
     
     # for megadepth, we visualize matches on the resized image
     if 'scale0' in data:
-        kpts0 = kpts0 / data['scale0'][b_id].cpu().numpy()[[1, 0]]
-        kpts1 = kpts1 / data['scale1'][b_id].cpu().numpy()[[1, 0]]
+        kpts0 = kpts0 / data['scale0'][b_id].cpu().numpy()[[0, 1]]
+        kpts1 = kpts1 / data['scale1'][b_id].cpu().numpy()[[0, 1]]
 
     epi_errs = data['epi_errs'][b_mask].cpu().numpy()
     correct_mask = epi_errs < conf_thr
