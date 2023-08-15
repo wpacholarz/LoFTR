@@ -123,8 +123,6 @@ def read_megadepth_gray(path, resize=None, df=None, padding=False, augment_fn=No
         mask = None
 
     image = torch.from_numpy(image).float()[None] / 255  # (h, w) -> (1, h, w) and normalized
-    mask = torch.from_numpy(mask)
-
     return image, mask, scale
 
 
