@@ -102,7 +102,7 @@ def _make_evaluation_figure(data, b_id, alpha='dynamic'):
     # make the figure
     figure = make_matching_figure(img0, img1, kpts0, kpts1,
                                   color, text=text)
-    return figure
+    return figure, precision
 
 def _make_confidence_figure(data, b_id):
     # TODO: Implement confidence figure
@@ -120,9 +120,10 @@ def make_matching_figures(data, config, mode='evaluation'):
     """
     assert mode in ['evaluation', 'confidence']  # 'confidence'
     figures = {mode: []}
+    precisions = []
     for b_id in range(data['image0'].size(0)):
         if mode == 'evaluation':
-            fig = _make_evaluation_figure(
+            fig, precision = _make_evaluation_figure(
                 data, b_id,
                 alpha=config.TRAINER.PLOT_MATCHES_ALPHA)
         elif mode == 'confidence':
@@ -130,7 +131,9 @@ def make_matching_figures(data, config, mode='evaluation'):
         else:
             raise ValueError(f'Unknown plot mode: {mode}')
         figures[mode].append(fig)
-    return figures
+        precisions.append(precision)
+    precision = sum(precisions) / len(precisions)
+    return figures, precision
 
 
 def dynamic_alpha(n_matches,

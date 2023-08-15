@@ -126,9 +126,11 @@ class PL_LoFTR(pl.LightningModule):
             # figures
             if self.config.TRAINER.ENABLE_PLOTTING:
                 compute_symmetrical_epipolar_errors(batch)  # compute epi_errs for each match
-                figures = make_matching_figures(batch, self.config, self.config.TRAINER.PLOT_MODE)
+                figures, precision = make_matching_figures(batch, self.config, self.config.TRAINER.PLOT_MODE)
                 for k, v in figures.items():
                     self.logger.experiment.add_figure(f'train_match/{k}', v, self.global_step)
+
+                self.logger.experiment.add_scalar(f'precision', precision*100, self.global_step)
 
         return {'loss': batch['loss']}
 
@@ -147,7 +149,7 @@ class PL_LoFTR(pl.LightningModule):
         val_plot_interval = max(self.trainer.num_val_batches[0] // self.n_vals_plot, 1)
         figures = {self.config.TRAINER.PLOT_MODE: []}
         if batch_idx % val_plot_interval == 0:
-            figures = make_matching_figures(batch, self.config, mode=self.config.TRAINER.PLOT_MODE)
+            figures, _ = make_matching_figures(batch, self.config, mode=self.config.TRAINER.PLOT_MODE)
 
         return {
             **ret_dict,
