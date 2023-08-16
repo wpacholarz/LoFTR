@@ -20,4 +20,4 @@ cfg.DATASET.MIN_OVERLAP_SCORE_TEST = 0.0   # for both test and val
 cfg.TRAINER.N_SAMPLES_PER_SUBSET = 100
 
 cfg.DATASET.MGDPT_IMG_RESIZE = 480  # for training on 11GB mem GPUs
-# cfg.DATASET.MGDPT_IMG_PAD = False
+cfg.DATASET.MGDPT_IMG_PAD = False

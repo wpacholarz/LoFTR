@@ -107,10 +107,10 @@ def read_megadepth_gray(path, resize=None, df=None, padding=False, augment_fn=No
 
     # resize image
     w, h = image.shape[1], image.shape[0]
-    w_new, h_new = get_resized_wh(w, h, resize)
-    w_new, h_new = get_divisible_wh(w_new, h_new, df)
-    # w_new = resize
-    # h_new = resize
+    # w_new, h_new = get_resized_wh(w, h, resize)
+    # w_new, h_new = get_divisible_wh(w_new, h_new, df)
+    w_new = resize
+    h_new = resize
 
     image = cv2.resize(image, (w_new, h_new))
     scale = torch.tensor([w/w_new, h/h_new], dtype=torch.float)

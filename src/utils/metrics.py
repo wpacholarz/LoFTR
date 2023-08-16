@@ -56,8 +56,10 @@ def compute_symmetrical_epipolar_errors(data):
     E_mat = Tx @ data['T_0to1'][:, :3, :3]
 
     m_bids = data['m_bids']
-    pts0 = data['mkpts0_f']
-    pts1 = data['mkpts1_f']
+    # pts0 = data['mkpts0_f']
+    # pts1 = data['mkpts1_f']
+    pts0 = data['mkpts0_c']
+    pts1 = data['mkpts1_c']
 
     epi_errs = []
     for bs in range(Tx.size(0)):
@@ -112,8 +114,10 @@ def compute_pose_errors(data, config):
     data.update({'R_errs': [], 't_errs': [], 'inliers': []})
 
     m_bids = data['m_bids'].cpu().numpy()
-    pts0 = data['mkpts0_f'].cpu().numpy()
-    pts1 = data['mkpts1_f'].cpu().numpy()
+    # pts0 = data['mkpts0_f'].cpu().numpy()
+    # pts1 = data['mkpts1_f'].cpu().numpy()
+    pts0 = data['mkpts0_c'].cpu().numpy()
+    pts1 = data['mkpts1_c'].cpu().numpy()
     K0 = data['K0'].cpu().numpy()
     K1 = data['K1'].cpu().numpy()
     T_0to1 = data['T_0to1'].cpu().numpy()

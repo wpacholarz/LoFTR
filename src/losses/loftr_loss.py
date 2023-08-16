@@ -180,13 +180,13 @@ class LoFTRLoss(nn.Module):
         loss_scalars.update({"loss_c": loss_c.clone().detach().cpu()})
 
         # 2. fine-level loss
-        loss_f = self.compute_fine_loss(data['expec_f'], data['expec_f_gt'])
-        if loss_f is not None:
-            loss += loss_f * self.loss_config['fine_weight']
-            loss_scalars.update({"loss_f":  loss_f.clone().detach().cpu()})
-        else:
-            assert self.training is False
-            loss_scalars.update({'loss_f': torch.tensor(1.)})  # 1 is the upper bound
+        # loss_f = self.compute_fine_loss(data['expec_f'], data['expec_f_gt'])
+        # if loss_f is not None:
+        #     loss += loss_f * self.loss_config['fine_weight']
+        #     loss_scalars.update({"loss_f":  loss_f.clone().detach().cpu()})
+        # else:
+        #     assert self.training is False
+        #     loss_scalars.update({'loss_f': torch.tensor(1.)})  # 1 is the upper bound
 
         loss_scalars.update({'loss': loss.clone().detach().cpu()})
         data.update({"loss": loss, "loss_scalars": loss_scalars})

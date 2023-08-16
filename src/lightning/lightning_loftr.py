@@ -86,8 +86,8 @@ class PL_LoFTR(pl.LightningModule):
         with self.profiler.profile("LoFTR"):
             self.matcher(batch)
         
-        with self.profiler.profile("Compute fine supervision"):
-            compute_supervision_fine(batch, self.config)
+        # with self.profiler.profile("Compute fine supervision"):
+        #     compute_supervision_fine(batch, self.config)
             
         with self.profiler.profile("Compute losses"):
             self.loss(batch)
