@@ -1,4 +1,14 @@
-#!/bin/bash -l
+#!/bin/bash
+
+#SBATCH --job-name="l-orig"
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=4
+#SBATCH --gres=gpu:1,VRAM:48G
+#SBATCH --mem=64G
+#SBATCH --mail-type=ALL
+#SBATCH --time=14-00:00:00
+#SBATCH --output=outputs/OUTPUT-%j.out
+#SBATCH --error=errors/ERROR-%j.out
 
 SCRIPTPATH=$(dirname $(readlink -f "$0"))
 PROJECT_DIR="${SCRIPTPATH}/../../"
@@ -7,7 +17,7 @@ PROJECT_DIR="${SCRIPTPATH}/../../"
 export PYTHONPATH=$PROJECT_DIR:$PYTHONPATH
 cd $PROJECT_DIR
 
-TRAIN_IMG_SIZE=640
+TRAIN_IMG_SIZE=480
 # to reproduced the results in our paper, please use:
 # TRAIN_IMG_SIZE=840
 data_cfg_path="/home/stud/pacholar/data/thesis/LoFTR_fork/configs/data/megadepth_trainval_${TRAIN_IMG_SIZE}.py"
@@ -16,11 +26,11 @@ main_cfg_path="/home/stud/pacholar/data/thesis/LoFTR_fork/configs/loftr/outdoor/
 n_nodes=1
 n_gpus_per_node=1
 torch_num_workers=4
-batch_size=1
+batch_size=3
 pin_memory=true
-exp_name="todelete-${TRAIN_IMG_SIZE}-bs=$(($n_gpus_per_node * $n_nodes * $batch_size))"
+exp_name="full-loftr-original-${TRAIN_IMG_SIZE}-bs=$(($n_gpus_per_node * $n_nodes * $batch_size))"
 
-python -u ./train.py \
+srun python -u /home/stud/pacholar/data/thesis/LoFTR_fork/train.py \
     ${data_cfg_path} \
     ${main_cfg_path} \
     --exp_name=${exp_name} \
@@ -32,4 +42,4 @@ python -u ./train.py \
     --limit_val_batches=1. \
     --num_sanity_val_steps=10 \
     --benchmark=True \
-    --max_epochs=30
+    --max_epochs=100 \
