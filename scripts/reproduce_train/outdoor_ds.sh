@@ -7,7 +7,7 @@ PROJECT_DIR="${SCRIPTPATH}/../../"
 export PYTHONPATH=$PROJECT_DIR:$PYTHONPATH
 cd $PROJECT_DIR
 
-TRAIN_IMG_SIZE=640
+TRAIN_IMG_SIZE=480
 # to reproduced the results in our paper, please use:
 # TRAIN_IMG_SIZE=840
 data_cfg_path="/home/stud/pacholar/data/thesis/LoFTR_fork/configs/data/megadepth_trainval_${TRAIN_IMG_SIZE}.py"
